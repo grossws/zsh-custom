@@ -186,6 +186,8 @@ jcdf() {
 }
 
 
+alias rgi='rg -i'
+
 # sudo aliases
 
 alias _='sudo'
