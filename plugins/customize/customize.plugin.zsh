@@ -1,5 +1,7 @@
 # docker aliases
 
+alias zshconfig='vim ~/.zshrc'
+
 alias dk='docker'
 
 alias dks='docker ps'
@@ -201,6 +203,12 @@ passwd-read() {
   read -s -r pp\?'Enter password: '
   echo -n $pp
 }
+
+mksrcinfo() {
+  makepkg --printsrcinfo > .SRCINFO
+}
+
+alias rmqctl='suod -u rabbitmq -i rabbitmqctl'
 
 
 # vim:sw=2:et:ai:sts=2:
