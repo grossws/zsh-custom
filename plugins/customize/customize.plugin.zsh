@@ -191,6 +191,12 @@ function mvn_download() {
 }
 
 
+# systemctl
+
+alias sc='systemctl'
+alias sc-daemon-reload='sudo systemctl daemon-reload'
+
+
 # journalctl
 
 alias jc='journalctl'
