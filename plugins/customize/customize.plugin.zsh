@@ -280,7 +280,7 @@ function mksrcinfo() {
 
 alias rgi='rg -i'
 
-alias rmqctl='suod -u rabbitmq -i rabbitmqctl'
+alias rmqctl='sudo -u rabbitmq -i rabbitmqctl'
 
 
 # vim:sw=2:et:ai:sts=2:
