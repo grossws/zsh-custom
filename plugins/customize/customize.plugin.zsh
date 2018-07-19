@@ -213,7 +213,35 @@ function jcdf() {
 }
 
 
-alias rgi='rg -i'
+# firewalld
+
+# temporary until fixed in gh:robbyrussell/oh-my-zsh
+function fwl () {
+  # converts output to zsh array ()
+  # @f flag split on new line
+  zones=("${(@f)$(sudo firewall-cmd --get-active-zones | grep -v 'interfaces\|sources')}")
+
+  for i in $zones; do
+    sudo firewall-cmd --zone $i --list-all
+  done
+
+  echo 'Direct Rules:'
+  sudo firewall-cmd --direct --get-all-rules
+}
+
+function fwpl() {
+  # converts output to zsh array ()
+  # @f flag split on new line
+  zones=("${(@f)$(sudo firewall-cmd --get-active-zones | grep -v 'interfaces\|sources')}")
+
+  for i in $zones; do
+    sudo firewall-cmd --permanent --zone $i --list-all
+  done
+
+  echo 'Direct Rules:'
+  sudo firewall-cmd --permanent --direct --get-all-rules
+}
+
 
 # sudo aliases
 
@@ -232,6 +260,8 @@ function passwd-read() {
 function mksrcinfo() {
   makepkg --printsrcinfo > .SRCINFO
 }
+
+alias rgi='rg -i'
 
 alias rmqctl='suod -u rabbitmq -i rabbitmqctl'
 
