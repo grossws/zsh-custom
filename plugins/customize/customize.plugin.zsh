@@ -21,11 +21,13 @@ alias dkdi='docker rmi'
 alias dkr='docker run -it'
 alias dkrv='docker run -it --rm'
 alias dkrd='docker run -d'
-alias dke='docker exec'
+alias dke='docker exec -it'
 
 alias dkb='docker build -t'
 
 alias dkl='docker logs'
+alias dklt='docker logs --tail'
+alias dklf='docker logs -f --tail 20'
 
 function dkit() {
   echo -e "GET /images/json?all=1 HTTP/1.0\r\n" | nc -U /var/run/docker.sock | tail -n +5 | $HOME/bin/dockviz images --tree
