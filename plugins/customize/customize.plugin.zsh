@@ -62,6 +62,16 @@ alias gfu='git fetch upstream'
 
 export M2_HOME=/opt/maven
 
+function mvn-help() {
+  if [[ $# -lt 1 ]] ; then
+    echo "usage: mvn-help plugin:goal"
+    return 1
+  fi
+
+  mvn help:describe -Dcmd="$1" -Ddetail
+}
+
+alias mvnprerel='mvn clean package verify javadoc:jar'
 
 function mvnrp() {
   local rel
@@ -129,12 +139,13 @@ function mvn_download() {
   packaging=jar
   classifier=
   version=RELEASE
+  output=
 
   OPTIND=1
-  while getopts "hg:a:v:c:p:" opt ; do
+  while getopts "hg:a:v:c:p:o:" opt ; do
     case "$opt" in
       h)
-        echo -ne "usage:\tmvn_download [-g <groupId=org.anenerbe>] [-a <artifactId>] [-p <packaging=jar>] [-v <version=RELEASE>] [-c <classifier=>]\n\tmvn_download -h\n\nreturns 0 in case of success and not 0 otherwise\n\n"
+        echo -ne "usage:\tmvn_download [-o <output-file>] [-g <groupId=org.anenerbe>] [-a <artifactId>] [-p <packaging=jar>] [-v <version=RELEASE>] [-c <classifier=>]\n\tmvn_download -h\n\nreturns 0 in case of success and not 0 otherwise\n\n"
         return 1
         ;;
       g)
@@ -151,6 +162,9 @@ function mvn_download() {
         ;;
       p)
         packaging=$OPTARG
+        ;;
+      o)
+        output=$OPTARG
         ;;
     esac
   done
@@ -169,7 +183,10 @@ function mvn_download() {
     return 1
   fi
 
-  mvn dependency:copy -Dartifact=${group}:${artifact}:${version}:${packaging}:${classifier} -Dmdep.stripVersion=true -Dmdep.overWriteReleases=true -Dmdep.overWriteSnapshots=true -DoutputDirectory=./
+  mvn dependency:copy -Dartifact=${group}:${artifact}:${version}:${packaging}:${classifier} -Dmdep.stripVersion=true -Dmdep.overWriteReleases=true -Dmdep.overWriteSnapshots=true -DoutputDirectory=./ -Dsilent=true
+  [[ -n "$output" && -n "$classifier" ]] && mv -vf ./${artifact}-${classifier}.${packaging} ${output}
+  [[ -n "$output" && -z "$classifier" ]] && mv -vf ./${artifact}.${packaging} ${output}
+
   return $?
 }
 
