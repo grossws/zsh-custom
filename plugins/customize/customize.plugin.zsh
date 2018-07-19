@@ -282,6 +282,10 @@ alias rgi='rg -i'
 
 alias rmqctl='sudo -u rabbitmq -i rabbitmqctl'
 
+alias ssa="sudo ss --no-header --numeric --listening --tcp --udp --processes | awk '{ print \$1, \$5, \$7 }' | column -t -o \$'\\t\\t'"
+alias sst="sudo ss --no-header --numeric --listening --tcp --processes | awk '{ print \$4, \$6 }' | column -t -o \$'\\t\\t'"
+alias ssu="sudo ss --no-header --numeric --listening --udp --processes | awk '{ print \$4, \$6 }' | column -t -o \$'\\t\\t'"
+
 
 # vim:sw=2:et:ai:sts=2:
 
