@@ -8,7 +8,7 @@ alias dks='docker ps'
 alias dksa='docker ps -a'
 alias dkd='docker rm -v'
 
-dki() {
+function dki() {
   if [ $# -gt 0 ] ; then
     docker images | grep "$@"
   else
@@ -27,11 +27,11 @@ alias dkb='docker build -t'
 
 alias dkl='docker logs'
 
-dkit() {
+function dkit() {
   echo -e "GET /images/json?all=1 HTTP/1.0\r\n" | nc -U /var/run/docker.sock | tail -n +5 | $HOME/bin/dockviz images --tree
 }
 
-dkct() {
+function dkct() {
   echo -e "GET /containers/json?all=1 HTTP/1.0\r\n" | nc -U /var/run/docker.sock | tail -n +5 | $HOME/bin/dockviz containers --tree
 }
 
@@ -61,7 +61,7 @@ alias gfu='git fetch upstream'
 export M2_HOME=/opt/maven
 
 
-mvnrp() {
+function mvnrp() {
   local rel
   local dev
   local answer
@@ -96,7 +96,7 @@ mvnrp() {
   fi
 }
 
-mvnrb() {
+function mvnrb() {
   if [ $# -ne 3 ] ; then
     echo "usage: mvnrp branch release development"
   else
@@ -121,7 +121,7 @@ mvnrb() {
 
 alias mvnrel='mvn release:perform'
 
-mvn_download() {
+function mvn_download() {
   group=org.anenerbe
   artifact=
   packaging=jar
@@ -179,11 +179,11 @@ alias jcu='journalctl -u'
 alias jceu='journalctl -eu'
 alias jcfu='journalctl -fu'
 
-jcd() {
+function jcd() {
   journalctl -u docker.service CONTAINER_NAME="$@"
 }
 
-jcdf() {
+function jcdf() {
   journalctl -fu docker.service CONTAINER_NAME="$@"
 }
 
@@ -199,12 +199,12 @@ alias _i='sudo -i'
 
 # other
 
-passwd-read() {
+function passwd-read() {
   read -s -r pp\?'Enter password: '
   echo -n $pp
 }
 
-mksrcinfo() {
+function mksrcinfo() {
   makepkg --printsrcinfo > .SRCINFO
 }
 
