@@ -243,6 +243,23 @@ function fwpl() {
 }
 
 
+# ansible
+
+alias ans='ansible'
+
+alias ansp='ansible-playbook'
+
+alias ansg='ansible-galaxy'
+alias ansgi='ansible-galaxy install'
+alias ansgir='ansible-galaxy install --force --role-file requirements.yml'
+
+function ansfc() {
+  ANSIBLE_FACTS_CACHE=$HOME/.ansible/facts-cache
+  echo "cleaning ansible facts cache ${ANSIBLE_FACTS_CACHE}"
+  rm -rf ${ANSIBLE_FACTS_CACHE}
+}
+
+
 # sudo aliases
 
 alias _='sudo'
