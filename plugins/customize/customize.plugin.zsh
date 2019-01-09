@@ -134,18 +134,19 @@ function mvnrb() {
 alias mvnrel='mvn release:perform'
 
 function mvn_download() {
-  group=org.anenerbe
-  artifact=
-  packaging=jar
-  classifier=
-  version=RELEASE
-  output=
+  local group=org.anenerbe
+  local artifact=
+  local packaging=jar
+  local classifier=
+  local version=RELEASE
+  local output=./
+  local strip_version=true
 
   OPTIND=1
-  while getopts "hg:a:v:c:p:o:" opt ; do
+  while getopts "hSg:a:v:c:p:o:" opt ; do
     case "$opt" in
       h)
-        echo -ne "usage:\tmvn_download [-o <output-file>] [-g <groupId=org.anenerbe>] [-a <artifactId>] [-p <packaging=jar>] [-v <version=RELEASE>] [-c <classifier=>]\n\tmvn_download -h\n\nreturns 0 in case of success and not 0 otherwise\n\n"
+        echo -ne "usage:\tmvn_download [-o <output-file>] [-g <groupId=org.anenerbe>] [-a <artifactId>] [-p <packaging=jar>] [-v <version=RELEASE>] [-c <classifier=>] [-S]\n\tmvn_download -h\n\nreturns 0 in case of success and not 0 otherwise\n\n"
         return 1
         ;;
       g)
@@ -166,6 +167,9 @@ function mvn_download() {
       o)
         output=$OPTARG
         ;;
+      S)
+        strip_version=false
+        ;;
     esac
   done
 
@@ -183,9 +187,8 @@ function mvn_download() {
     return 1
   fi
 
-  mvn dependency:copy -Dartifact=${group}:${artifact}:${version}:${packaging}:${classifier} -Dmdep.stripVersion=true -Dmdep.overWriteReleases=true -Dmdep.overWriteSnapshots=true -DoutputDirectory=./ -Dsilent=true
-  [[ -n "$output" && -n "$classifier" ]] && mv -vf ./${artifact}-${classifier}.${packaging} ${output}
-  [[ -n "$output" && -z "$classifier" ]] && mv -vf ./${artifact}.${packaging} ${output}
+  mvn dependency:copy -Dartifact=${group}:${artifact}:${version}:${packaging}:${classifier} -Dmdep.stripVersion=${strip_version} -Dmdep.overWriteReleases=true -Dmdep.overWriteSnapshots=true -DoutputDirectory=./ -Dsilent=true
+  mv -vf ./${artifact}-*.${packaging} ${output}
 
   return $?
 }
