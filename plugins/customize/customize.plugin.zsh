@@ -71,7 +71,7 @@ function mvn-help() {
   mvn help:describe -Dcmd="$1" -Ddetail
 }
 
-alias mvnprerel='mvn clean package verify javadoc:jar'
+alias mvnprerel='mvn -Prelease-profile clean install'
 
 function mvnrp() {
   local rel
