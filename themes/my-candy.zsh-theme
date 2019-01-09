@@ -8,7 +8,7 @@ if [ ! "x$SSH_CLIENT" = "x" ] ; then
   PROMPT=$'%{$fg_bold[magenta]%}[R]%{$reset_color%} '${PROMPT}$'%{$fg_bold[magenta]%}'
 fi
 
-PROMPT=${PROMPT}$'%m %{$fg[blue]%}%D{[%I:%M:%S]} %{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%} $(git_prompt_info)\
+PROMPT=${PROMPT}$'%m %{$fg[blue]%}%D{[%H:%M:%S]} %{$reset_color%}%{$fg[white]%}[%~]%{$reset_color%} $(git_prompt_info)\
 %{$fg[blue]%}->%{$fg_bold[blue]%} %#%{$reset_color%} '
 
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[green]%}["
